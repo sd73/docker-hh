@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+    srv1:
+        build: ./srv1
+        ports:
+            - "8888:80"
+        volumes:
+            - ./logs-srv1:/var/log/nginx
+        links:
+            - srv2
+
+    srv2:
+        build: ./srv2
+        volumes:
+            - ./logs-srv2:/var/log/nginx
+            - ./www:/var/www
+        links:
+            - php
+
+    php:
+       build: ./php
+       volumes:
+            - ./www:/var/www
